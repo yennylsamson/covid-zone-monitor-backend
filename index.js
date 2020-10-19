@@ -10,7 +10,7 @@ db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'dbase'
+  database: 'database_user'
 })
 
 // make server object that contain port property and the value for our server.

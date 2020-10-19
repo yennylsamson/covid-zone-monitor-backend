@@ -3,7 +3,7 @@ const express = require('express'),
 
 // get user lists
 router.get('/list', function(req, res) {
-  let sql = `SELECT * FROM qrnames`;
+  let sql = `SELECT * FROM users`;
   db.query(sql, function(err, data, fields) {
     if (err) throw err;
     res.json({
@@ -16,10 +16,15 @@ router.get('/list', function(req, res) {
 
 // create new user
 router.post('/new', function(req, res) {
-  let sql = `INSERT INTO qrnames(dataName) VALUES (?)`;
+  let sql = `INSERT INTO users(dataLastName, dataFirstName, dataEmailAdd, dataPhoneNumber, dataAddress, dataPassword) VALUES (?)`;
   console.log(req.body)
   let values = [
-    req.body.dataName,
+    req.body.dataLastName,
+    req.body.dataFirstName,
+    req.body.dataEmailAdd,
+    req.body.dataPhoneNumber,
+    req.body.dataAddress,
+    req.body.dataPassword,
   ];
   db.query(sql, [values], function(err, data, fields) {
     if (err) throw err;
