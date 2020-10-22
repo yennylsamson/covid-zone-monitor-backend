@@ -15,7 +15,7 @@ router.get('/list', function(req, res) {
 });
 
 // create new user
-router.post('/new', function(req, res) {
+router.post('/register', function(req, res) {
   let sql = `INSERT INTO users(dataLastName, dataFirstName, dataEmailAdd, dataPhoneNumber, dataAddress, dataPassword) VALUES (?)`;
   console.log(req.body)
   let values = [
@@ -31,6 +31,42 @@ router.post('/new', function(req, res) {
     res.json({
       status: 200,
       message: "New user added successfully"
+    })
+  })
+});
+
+//create new place list
+router.post('/log', function(req, res) {
+  let sql = `INSERT INTO placelist(dataLastName, dataFirstName, dateTime, placeName) VALUES (?)`;
+  console.log(req.body)
+  let values = [
+    req.body.dataLastName,
+    req.body.dataFirstName,
+    req.body.dateTime,
+    req.body.placeName,
+  ];
+  db.query(sql, [values], function(err, data, fields) {
+    if (err) throw err;
+    res.json({
+      status: 200,
+      message: "New place added successfully"
+    })
+  })
+});
+
+//get user
+router.post('/auth', function(req, res) {
+  let sql = `SELECT * FROM users WHERE dataEmailAdd = ?`;
+  console.log(req.body)
+  let values = [
+    req.body.dataEmailAdd,
+  ];
+  db.query(sql, [values], function(err, data, fields) {
+    if (err) throw err;
+    res.json({
+      status: 200,
+      data,
+      message: "Authentication successful"
     })
   })
 });
