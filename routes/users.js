@@ -35,16 +35,15 @@ router.post('/new', function(req, res) {
   })
 });
 
-<<<<<<< Updated upstream
-=======
 //create new place list
 router.post('/log', function(req, res) {
-  let sql = `INSERT INTO placelist(dataLastName, dataFirstName, dateTime, placeName) VALUES (?)`;
+  let sql = `INSERT INTO placelist(dataLastName, dataFirstName, dataDate, dataTime, placeName) VALUES (?)`;
   console.log(req.body)
   let values = [
     req.body.dataLastName,
     req.body.dataFirstName,
-    req.body.dateTime,
+    req.body.dataDate,
+    req.body.dataTime,
     req.body.placeName,
   ];
   db.query(sql, [values], function(err, data, fields) {
@@ -93,11 +92,11 @@ router.post('/loc', function(req, res) {
 
 //add positive location
 router.post('/pos', function(req, res) {
-  let sql = `INSERT INTO positive(dateTime, location) VALUES (?)`;
+  let sql = `INSERT INTO positive(dataDate, placeName) VALUES (?)`;
   console.log(req.body)
   let values = [
-    req.body.dateTime,
-    req.body.location,
+    req.body.dataDate,
+    req.body.placeName,
   ];
   db.query(sql, [values], function(err, data, fields) {
     if (err) throw err;
@@ -108,6 +107,17 @@ router.post('/pos', function(req, res) {
   })
 });
 
+//get positive location
+router.get('/getpos', function(req, res) {
+  let sql = `SELECT * FROM positive`;
+  db.query(sql, function(err, data, fields) {
+    if (err) throw err;
+    res.json({
+      status: 200,
+      data,
+      message: "User lists retrieved successfully"
+    })
+  })
+});
 
->>>>>>> Stashed changes
 module.exports = router;
