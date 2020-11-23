@@ -55,7 +55,7 @@ router.post('/log', function(req, res) {
   })
 });
 
-//get user
+//check user
 router.post('/auth', function(req, res) {
   let sql = `SELECT * FROM users WHERE dataEmailAdd = ?`;
   console.log(req.body)
@@ -116,6 +116,43 @@ router.get('/getpos', function(req, res) {
       status: 200,
       data,
       message: "User lists retrieved successfully"
+    })
+  })
+});
+
+//set user positive
+router.post('/setpos', function(req, res) {
+  let sql = `UPDATE users SET covidStatus = ? WHERE dataLastName =?`;
+  console.log(req.body)
+  let values = [
+    req.body.covidStatus,
+    req.body.dataLastName,
+    
+  ];
+  db.query(sql, [req.body.covidStatus,
+    req.body.dataLastName], function(err, data, fields) {
+    if (err) throw err;
+    res.json({
+      status: 200,
+      message: "add location successfully"
+    })
+  })
+});
+
+//get specific user
+router.post('/getuser', function(req, res) {
+  let sql = `SELECT * FROM users WHERE dataLastName = ?`;
+  console.log(req.body)
+  let values = [
+    req.body.dataLastName,
+    
+  ];
+  db.query(sql, [values], function(err, data, fields) {
+    if (err) throw err;
+    res.json({
+      status: 200,
+      data,
+      message: "User retrieved successfully"
     })
   })
 });
